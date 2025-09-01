@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
+// Google Fonts para un look moderno y llamativo
+const fontLink = document.createElement('link');
+fontLink.rel = 'stylesheet';
+fontLink.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;600;700&display=swap';
+document.head.appendChild(fontLink);
+
 function App() {
   // Estados para el formulario
   const [nombre, setNombre] = useState("");
@@ -129,85 +135,127 @@ function App() {
 
   // Aquí empieza la parte visual que ve el usuario
   return (
-    <div className="App">{/* Contenedor principal de la aplicación */}
-      {/* Formulario para ingresar los datos */}
-      <div className="datos">{/* Contenedor del formulario */}
-        <label> Nombre:{/* Etiqueta del input de nombre */}
-          <input
-            type="text" /* Campo de texto */
-            value={nombre} /* Valor controlado por el estado 'nombre' */
-            onChange={(e) => setNombre(e.target.value)} /* Actualiza 'nombre' al escribir */
-          />
-        </label>
-        <label> Edad:{/* Etiqueta del input de edad */}
-          <input
-            type="number" /* Campo numérico */
-            value={edad} /* Valor controlado por 'edad' */
-            onChange={(e) => setEdad(Number(e.target.value))} /* Convierte a número y guarda */
-          />
-        </label>
-        <label> País:{/* Etiqueta del input de país */}
-          <input
-            type="text" /* Campo de texto */
-            value={pais} /* Valor controlado por 'pais' */
-            onChange={(e) => setPais(e.target.value)} /* Actualiza 'pais' */
-          />
-        </label>
-        <label> Cargo:{/* Etiqueta del input de cargo */}
-          <input
-            type="text" /* Campo de texto */
-            value={cargo} /* Valor controlado por 'cargo' */
-            onChange={(e) => setCargo(e.target.value)} /* Actualiza 'cargo' */
-          />
-        </label>
-        <label> Años:{/* Etiqueta del input de años de experiencia */}
-          <input
-            type="number" /* Campo numérico */
-            value={anios} /* Valor controlado por 'anios' */
-            onChange={(e) => setAnios(Number(e.target.value))} /* Convierte a número y guarda */
-          />
-        </label>
+    <div className="App">
+      {/* Header llamativo */}
+      <header style={{
+        width: '100%',
+        padding: '48px 0 24px 0',
+        textAlign: 'center',
+        background: 'none',
+        zIndex: 3,
+        position: 'relative',
+      }}>
+        <h1 style={{
+          fontFamily: 'Montserrat, Poppins, Arial, sans-serif',
+          fontWeight: 900,
+          fontSize: '3.2rem',
+          color: 'var(--primary-2)',
+          letterSpacing: '3px',
+          textShadow: '0 6px 32px #00c6fb55, 0 1px 2px #23283b',
+          margin: 0,
+          textTransform: 'uppercase',
+        }}>
+          <span style={{color: 'var(--accent)'}}>Gestión</span> de Empleados
+        </h1>
+        <p style={{
+          color: 'var(--muted)',
+          fontFamily: 'Poppins, Arial, sans-serif',
+          fontWeight: 600,
+          fontSize: '1.25rem',
+          marginTop: 12,
+          letterSpacing: '1px',
+        }}>
+          Registra, edita y elimina empleados con una experiencia visual única
+        </p>
+      </header>
 
-        {/* Botón que cambia de texto dependiendo si es nuevo o edición */}
-        <button onClick={registrarDatos}>
-          {editIndex !== null ? 'Actualizar' : 'Registrar'}{/* Texto dinámico del botón */}
+      {/* Formulario centrado y visualmente destacado */}
+      <div className="form-modern" style={{boxShadow: '0 16px 48px #6c63ff33, 0 2px 8px #ff61a633'}}>
+        <h2 className="form-title">
+          {editIndex !== null ? 'Editar Empleado' : 'Registrar Nuevo Empleado'}
+        </h2>
+        <div className="form-fields" style={{width: '100%', display: 'flex', flexDirection: 'column', gap: 18}}>
+          <input
+            className="form-input"
+            type="text"
+            placeholder="Nombre completo"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            autoFocus
+          />
+          <input
+            className="form-input"
+            type="number"
+            placeholder="Edad"
+            value={edad}
+            onChange={(e) => setEdad(Number(e.target.value))}
+            min={0}
+          />
+          <input
+            className="form-input"
+            type="text"
+            placeholder="País"
+            value={pais}
+            onChange={(e) => setPais(e.target.value)}
+          />
+          <input
+            className="form-input"
+            type="text"
+            placeholder="Cargo"
+            value={cargo}
+            onChange={(e) => setCargo(e.target.value)}
+          />
+          <input
+            className="form-input"
+            type="number"
+            placeholder="Años de experiencia"
+            value={anios}
+            onChange={(e) => setAnios(Number(e.target.value))}
+            min={0}
+          />
+        </div>
+        <button className="form-btn" onClick={registrarDatos} style={{marginTop: 24, fontSize: '1.25rem'}}>
+          {editIndex !== null ? 'Actualizar' : 'Registrar'}
         </button>
       </div>
 
-      {/* Tabla con los empleados registrados */}
-      {registros.length > 0 && ( /* Solo mostramos la tabla si hay registros */
-        <div className="tabla-container">{/* Contenedor para estilos de la tabla */}
-          <table className="tabla-registros">{/* Tabla de empleados */}
-            <thead>{/* Cabecera de la tabla */}
-              <tr>{/* Fila de encabezados */}
-                <th>Nombre</th>{/* Columna: Nombre */}
-                <th>Edad</th>{/* Columna: Edad */}
-                <th>País</th>{/* Columna: País */}
-                <th>Cargo</th>{/* Columna: Cargo */}
-                <th>Años</th>{/* Columna: Años de experiencia */}
-                <th>Acciones</th>{/* Columna: Botones de acción */}
+      {/* Tabla visualmente impactante */}
+      {registros.length > 0 && (
+        <div className="tabla-formal-container" style={{boxShadow: '0 16px 48px #00c6fb33, 0 2px 8px #ff61a633'}}>
+          <table className="tabla-formal" style={{width: '100%', borderCollapse: 'separate', borderSpacing: 0}}>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>País</th>
+                <th>Cargo</th>
+                <th>Años</th>
+                <th>Acciones</th>
               </tr>
             </thead>
-            <tbody>{/* Cuerpo de la tabla */}
-              {registros.map((reg, idx) => ( /* Recorremos cada registro con su índice */
-                <tr key={idx}>{/* Fila por empleado (key = índice) */}
-                  <td>{reg.nombre}</td>{/* Celda: nombre del empleado */}
-                  <td>{reg.edad}</td>{/* Celda: edad del empleado */}
-                  <td>{reg.pais}</td>{/* Celda: país del empleado */}
-                  <td>{reg.cargo}</td>{/* Celda: cargo del empleado */}
-                  <td>{reg.anios}</td>{/* Celda: años de experiencia */}
-                  <td>{/* Celda: acciones */}
+            <tbody>
+              {registros.map((reg, idx) => (
+                <tr key={idx} style={{transition: 'box-shadow 0.3s', boxShadow: '0 2px 12px #6c63ff11'}}>
+                  <td className="cell-id">{idx + 1}</td>
+                  <td className="cell-nombre">{reg.nombre}</td>
+                  <td className="cell-edad">{reg.edad}</td>
+                  <td className="cell-pais">{reg.pais}</td>
+                  <td className="cell-cargo">{reg.cargo}</td>
+                  <td className="cell-anios">{reg.anios}</td>
+                  <td className="cell-acciones">
                     <button
-                      className="btn-editar" /* Clase CSS para estilos */
-                      onClick={() => editarRegistro(idx)} /* Al hacer clic, cargamos los datos en el formulario */
+                      className="btn-formal-editar"
+                      onClick={() => editarRegistro(idx)}
+                      style={{marginRight: 8}}
                     >
-                      Editar
+                      <span role="img" aria-label="Editar">✏️</span> Editar
                     </button>
                     <button
-                      className="btn-eliminar" /* Clase CSS para estilos */
-                      onClick={() => eliminarRegistro(idx)} /* Al hacer clic, eliminamos el registro */
+                      className="btn-formal-eliminar"
+                      onClick={() => eliminarRegistro(idx)}
                     >
-                      Eliminar
+                      <span role="img" aria-label="Eliminar">🗑️</span> Eliminar
                     </button>
                   </td>
                 </tr>
@@ -216,6 +264,19 @@ function App() {
           </table>
         </div>
       )}
+
+      {/* Animación decorativa de fondo */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        pointerEvents: 'none',
+        zIndex: 0,
+        background: 'radial-gradient(circle at 80% 10%, #6c63ff33 0%, transparent 60%), radial-gradient(circle at 10% 90%, #ff61a633 0%, transparent 60%)',
+        animation: 'fadeInApp 1.5s',
+      }} />
     </div>
   );
 }
