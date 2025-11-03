@@ -1,13 +1,8 @@
-/* ====== TABLA FORMAL ====== */
-.tabla-formal-container {
-  margin: 48px auto 0 auto;
-  max-width: 900px;
-  background: #f4f6f8;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px #b0b8c1a0, 0 2px 8px #e0e7ef;
-  border: 2px solid #b0b8c1;
-  padding: 32px 24px 24px 24px;
-  animation: fadeInTable 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+/* Estilos base para la aplicación de productos */
+.app-container {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  padding: 1rem;
 }
 
 .tabla-formal {
