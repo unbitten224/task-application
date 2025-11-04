@@ -136,11 +136,12 @@ const ProductForm = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">
-          {isEditing ? 'Editar Producto' : 'Nuevo Producto'}
-        </h1>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 py-8">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6 border border-blue-100">
+          <h1 className="text-2xl font-bold text-gray-900 mb-6">
+            {isEditing ? 'Editar Producto' : 'Nuevo Producto'}
+          </h1>
 
         {error && <ErrorMessage message={error} className="mb-4" />}
 
@@ -295,6 +296,7 @@ const ProductForm = () => {
             </button>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );

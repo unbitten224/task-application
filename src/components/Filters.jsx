@@ -2,55 +2,58 @@ import React from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 
 const Filters = ({ onFilterChange, categories }) => {
-  const [filters, setFilters] = React.useState({
+  const [localFilters, setLocalFilters] = React.useState({
     search: '',
     categoryId: ''
   });
 
-  const debouncedSearch = useDebounce(filters.search);
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setLocalFilters(prev => ({ ...prev, search: value }));
+    onFilterChange({ search: value, categoryId: localFilters.categoryId });
+  };
 
-  React.useEffect(() => {
-    onFilterChange({ 
-      search: debouncedSearch,
-      categoryId: filters.categoryId 
-    });
-  }, [debouncedSearch, filters.categoryId, onFilterChange]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFilters(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    setLocalFilters(prev => ({ ...prev, categoryId: value }));
+    onFilterChange({ search: localFilters.search, categoryId: value });
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow mb-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="search" className="block text-sm font-medium text-gray-700">
-            Buscar por nombre
-          </label>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="relative">
+        <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
+          Buscar producto
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
           <input
             type="text"
             name="search"
             id="search"
-            value={filters.search}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            placeholder="Buscar productos..."
+            value={localFilters.search}
+            onChange={handleSearchChange}
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-colors duration-200"
+            placeholder="Buscar por nombre..."
           />
         </div>
-        <div>
-          <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700">
-            Categoría
-          </label>
+      </div>
+
+      <div>
+        <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 mb-1">
+          Filtrar por categoría
+        </label>
+        <div className="relative">
           <select
             id="categoryId"
             name="categoryId"
-            value={filters.categoryId}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            value={localFilters.categoryId}
+            onChange={handleCategoryChange}
+            className="block w-full pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-colors duration-200 appearance-none"
           >
             <option value="">Todas las categorías</option>
             {categories.map(category => (
@@ -59,6 +62,11 @@ const Filters = ({ onFilterChange, categories }) => {
               </option>
             ))}
           </select>
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 // Obtener lista de productos con filtros y paginación
-export const getProducts = async ({ search = '', categoryId = '', page = 1, limit = 10 } = {}) => {
+export const getProducts = async ({ search = '', categoryId = '', page = 1, limit = 10, signal } = {}) => {
   try {
     const params = new URLSearchParams();
     if (search) params.append('search', search);
@@ -11,9 +11,12 @@ export const getProducts = async ({ search = '', categoryId = '', page = 1, limi
     params.append('page', page);
     params.append('limit', limit);
 
-    const { data } = await axios.get(`${API_URL}/products?${params}`);
+    const { data } = await axios.get(`${API_URL}/products?${params}`, { signal });
     return data;
   } catch (error) {
+    if (error.name === 'CanceledError') {
+      throw error;
+    }
     throw error.response?.data || { message: 'Error al obtener productos' };
   }
 };
