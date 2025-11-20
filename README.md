@@ -68,3 +68,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Notas sobre persistencia en esta demo
+
+La versión cliente de esta aplicación usa un almacen en memoria para usuarios y tareas (ver `src/store/InMemoryStore.js`).
+
+- Los usuarios que se registren y las tareas que se creen existen únicamente mientras la aplicación está en ejecución.
+- Si recargas la página completamente o cierras y vuelves a abrir la app, todos los datos en memoria se perderán.
+- Esto es intencional para la demostración sin backend persistente. Si quieres persistencia entre recargas, puedo agregar soporte para `localStorage` o conectar el cliente con el backend en `server/`.

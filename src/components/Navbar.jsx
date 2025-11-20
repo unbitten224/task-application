@@ -1,11 +1,19 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, currentUser, logout } = useApp();
 
   const isActive = (path) => {
     return location.pathname === path ? 'bg-blue-700' : '';
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -15,32 +23,54 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
-              <span className="ml-2 text-white font-semibold text-xl">Gestión de Productos</span>
+              <span className="ml-2 text-white font-semibold text-xl">Gestión de Tareas</span>
             </Link>
           </div>
 
-          <div className="flex space-x-4">
-            <Link
-              to="/"
-              className={`px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 ${isActive('/')}`}
-            >
-              Productos
-            </Link>
-            <Link
-              to="/products/new"
-              className={`px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 ${isActive('/products/new')}`}
-            >
-              Nuevo Producto
-            </Link>
-            <Link
-              to="/categories"
-              className={`px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 ${isActive('/categories')}`}
-            >
-              Categorías
-            </Link>
-          </div>
+          {isAuthenticated ? (
+            <div className="flex items-center space-x-4">
+              <Link
+                to="/"
+                className={`px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 ${isActive('/')}`}
+              >
+                Tareas
+              </Link>
+              <Link
+                to="/tasks/new"
+                className={`px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 ${isActive('/tasks/new')}`}
+              >
+                Nueva Tarea
+              </Link>
+              <div className="flex items-center space-x-3">
+                <span className="text-white text-sm">
+                  {currentUser?.name || currentUser?.email || 'Usuario'}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700"
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex space-x-4">
+              <Link
+                to="/login"
+                className={`px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 ${isActive('/login')}`}
+              >
+                Iniciar Sesión
+              </Link>
+              <Link
+                to="/register"
+                className={`px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 ${isActive('/register')}`}
+              >
+                Registrarse
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>
